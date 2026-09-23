@@ -1,0 +1,27 @@
+# Patterns for digits 0-9 represented on a 5x3 grid using '#'
+digits = [
+    ["###", "# #", "# #", "# #", "###"],  # 0
+    ["  #", "  #", "  #", "  #", "  #"],  # 1
+    ["###", "  #", "###", "#  ", "###"],  # 2
+    ["###", "  #", "###", "  #", "###"],  # 3
+    ["# #", "# #", "###", "  #", "  #"],  # 4
+    ["###", "#  ", "###", "  #", "###"],  # 5
+    ["###", "#  ", "###", "# #", "###"],  # 6
+    ["###", "  #", "  #", "  #", "  #"],  # 7
+    ["###", "# #", "###", "# #", "###"],  # 8
+    ["###", "# #", "###", "  #", "###"],  # 9
+]
+
+def print_number(number_str):
+    # Print line by line (5 total rows for each digit)
+    for row in range(5):
+        line = []
+        for char in number_str:
+            if char.isdigit():
+                digit = int(char)
+                line.append(digits[digit][row])
+        print(" ".join(line))
+
+# Prompt user for input
+user_input = input("Enter a non-negative integer: ")
+print_number(user_input)
