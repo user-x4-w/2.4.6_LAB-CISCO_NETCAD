@@ -25,3 +25,154 @@ def print_number(number_str):
 # Prompt user for input
 user_input = input("Enter a non-negative integer: ")
 print_number(user_input)
+
+
+
+# 1. Ask the user for text to encrypt
+text = input("Enter text to encrypt: ")
+
+# 2. Prompt and validate the shift value (must be an integer from 1 to 25)
+while True:
+    try:
+        shift = int(input("Enter shift value (1-25): "))
+        if 1 <= shift <= 25:
+            break
+        else:
+            print("Shift value must be an integer between 1 and 25.")
+    except ValueError:
+        print("Invalid input. Please enter an integer between 1 and 25.")
+
+# 3. Encrypt the text preserving case and non-alphabetical characters
+cipher = ""
+for char in text:
+    if char.isalpha():
+        # Determine starting ASCII code based on case
+        code = ord('A') if char.isupper() else ord('a')
+        # Shift character and wrap around using modulo 26
+        cipher += chr((ord(char) - code + shift) % 26 + code)
+    else:
+        # Non-alphabetical characters remain unchanged
+        cipher += char
+
+print(cipher)
+
+# Prompt user for text
+text = input("Enter text: ")
+
+# Remove spaces and convert to lowercase
+cleaned_text = text.replace(" ", "").lower()
+
+# Check if non-empty and equals its reverse
+if len(cleaned_text) > 0 and cleaned_text == cleaned_text[::-1]:
+    print("It's a palindrome")
+else:
+    print("It's not a palindrome")
+
+# Prompt user for two separate texts
+str1 = input("Enter first text: ")
+str2 = input("Enter second text: ")
+
+# Remove spaces and convert to lowercase
+clean_str1 = str1.replace(" ", "").lower()
+clean_str2 = str2.replace(" ", "").lower()
+
+# Check conditions: non-empty and sorted characters must be equal
+if len(clean_str1) > 0 and len(clean_str2) > 0 and sorted(clean_str1) == sorted(clean_str2):
+    print("Anagrams")
+else:
+    print("Not anagrams")
+
+# Prompt user for their birthday
+date_str = input("Enter your birthday (e.g. YYYYMMDD): ")
+
+# Filter out non-digit characters if any were entered
+digits = [char for char in date_str if char.isdigit()]
+
+if not digits:
+    print("Invalid input.")
+else:
+    # Sum the initial digits
+    total = sum(int(d) for d in digits)
+
+    # Continue summing digits until a single digit remains
+    while total > 9:
+        total = sum(int(d) for d in str(total))
+
+    print(total)
+
+# Prompt user for the target word and the search string
+word = input("Enter the word to search for: ").lower()
+text = input("Enter the string to search in: ").lower()
+
+found = True
+start_pos = 0
+
+# Check each character of the target word in sequential order
+for char in word:
+    # find() with 2 arguments: find(character, start_index)
+    pos = text.find(char, start_pos)
+    if pos == -1:
+        found = False
+        break
+    # Update search starting index to the position immediately after the match
+    start_pos = pos + 1
+
+if found:
+    print("Yes")
+else:
+    print("No")
+
+# 1. Read 9 rows of input from the user
+board = []
+for _ in range(9):
+    row = input().strip()
+    board.append(row)
+
+def is_valid_sudoku(board):
+    # Standard set of digits 1 through 9
+    valid_set = set("123456789")
+
+    # Check 1: Validate each row
+    for row in board:
+        if set(row) != valid_set or len(row) != 9:
+            return False
+
+    # Check 2: Validate each column
+    for col in range(9):
+        column_digits = set(board[row][col] for row in range(9))
+        if column_digits != valid_set:
+            return False
+
+    # Check 3: Validate each 3x3 sub-square
+    for row_start in (0, 3, 6):
+        for col_start in (0, 3, 6):
+            square_digits = set(
+                board[r][c]
+                for r in range(row_start, row_start + 3)
+                for c in range(col_start, col_start + 3)
+            )
+            if square_digits != valid_set:
+                return False
+
+    return True
+
+# 2. Check board and print output
+if is_valid_sudoku(board):
+    print("Yes")
+else:
+    print("No")
+
+def read_int(prompt, min, max):
+    while True:
+        try:
+            value = int(input(prompt))
+            if min <= value <= max:
+                return value
+            else:
+                print(f"Error: the value is not within permitted range ({min}..{max})")
+        except ValueError:
+            print("Error: wrong input")
+
+v = read_int("Enter a number from -10 to 10: ", -10, 10)
+
+print("The number is:", v)
